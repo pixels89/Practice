@@ -11,24 +11,31 @@ package in.barmans.practice;
  * and “BBCBB” are also palindromic subsequences of the given sequence, but not
  * the longest ones.
  * 
+ * 
  * @author mbarman
  *
  */
 
 public class LongestPanlidrome {
 
+	private static int[][] memo;
+
 	private static int checkParlindrome(String str, int s, int e) {
 		if (s >= e) {
 			return 1;
 		}
+		if (memo[s][e] != -1) {
+			return memo[s][e];
+		}
 		if (str.charAt(s) == str.charAt(e)) {
-			return 2 + checkParlindrome(str, s + 1, e - 1);
+			return memo[s][e] = 2 + checkParlindrome(str, s + 1, e - 1);
 		} else {
-			return Math.max(checkParlindrome(str, s + 1, e), checkParlindrome(str, s, e - 1));
+			return memo[s][e] = Math.max(checkParlindrome(str, s + 1, e), checkParlindrome(str, s, e - 1));
 		}
 	}
 
 	private static int checkParlindrome(String s) {
+		memo = PracticeUtil.initMemo(s.length(), s.length(), -1);
 
 		return checkParlindrome(s, 0, s.length() - 1);
 	}
