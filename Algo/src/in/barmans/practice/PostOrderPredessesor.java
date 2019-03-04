@@ -1,33 +1,43 @@
 package in.barmans.practice;
 
 /**
- * Given a binary tree and a node in the binary tree, find Postorder predecessor
+ * Given a binary tree and a node in the binary tree, find Post order successor
  * of the given node.
  * 
  * @author mbarman
  *
  */
-public class PostOrderPredessesor {
+public class PostOrderPredessesor extends BinararyTree {
 
-	private static int postPre(Node node, int pre, int val) {
+	public PostOrderPredessesor(Node root) {
+		super(root);
+	}
+
+	private static int postPre(Node node, int previous, int value) {
+
+		// Base case
 		if (node == null) {
 			return -1;
 		}
 
-		int left = postPre(node.left, pre, val);
+		// call Left passing previous as current pre
+		int left = postPre(node.left, previous, value);
 		if (left != -1) {
 			return left;
 		}
 		if (node.left != null) {
-			pre = node.left.data;
+			previous = node.left.data;
 		}
-		int right = postPre(node.right, pre, val);
+
+		// call right passing previous as left value is available
+		int right = postPre(node.right, previous, value);
 		if (right != -1) {
 			return right;
 		}
 
-		if (node.data == val) {
-			return pre;
+		// Postorder call
+		if (node.data == value) {
+			return previous;
 		} else
 			return -1;
 	}
@@ -51,19 +61,23 @@ public class PostOrderPredessesor {
 		_26.left = new Node(24);
 		_26.right = new Node(27);
 
+		inorder(root);
+		System.out.println();
+		reverseInorder(root);
+		System.out.println();
+		preorder(root);
+		System.out.println();
+		reversePreorder(root);
+		System.out.println();
+		postorder(root);
+		System.out.println();
+		reversePostorder(root);
+		System.out.println();
+
 		System.out.println(postPre(root, -1, 24));
 
 	}
 
-	static class Node {
-		Node left, right;
-		int data;
-
-		public Node(int data) {
-			this.data = data;
-		}
-	}
-	
-	// This code is contributed 
+	// This code is contributed
 	// by MukeshBarman
 }
