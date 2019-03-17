@@ -29,23 +29,25 @@ import java.util.Map;
  *
  */
 public class GrouponTest {
+	public static void main(String[] args) {
+		int[][] arr = { { 7, 1}, { 3,4 } };
 
-	private Map<String, Integer> map = new HashMap<>();
+		System.out.println(getCost(arr, -1, 0));
+	}
 
-	int getCost(int[][] arr, int usedColor, int houseIndex) {
+	private static Map<String, Integer> map = new HashMap<>();
+	private static int min = Integer.MAX_VALUE;// min value initialization bug
 
+	static int getCost(int[][] arr, int usedColor, int houseIndex) {
 		if (arr == null)
 			return 0;// throw exception
-		if (usedColor >= arr.length || usedColor < 0)
+		if (usedColor >= arr.length)
 			return 0;
 		if (houseIndex >= arr[0].length || houseIndex < 0)
 			return 0;
 
-		int min = Integer.MAX_VALUE;
-
-		for (int colorIndex = 0; colorIndex < arr.length - 1; colorIndex++) // each color
+		for (int colorIndex = 0; colorIndex < arr.length; colorIndex++) { // for loop end case bug
 			if (usedColor != colorIndex) {
-
 				int cost = arr[colorIndex][houseIndex];
 				int restHouseCost;
 				if (map.containsKey(colorIndex + "_" + houseIndex + 1)) {
@@ -55,14 +57,13 @@ public class GrouponTest {
 				}
 
 				int totalCost = cost + restHouseCost;
-
 				map.put(colorIndex + "_" + houseIndex, totalCost);
 				if (min > totalCost) {
 					min = totalCost;
 				}
 			}
-
-		return min;
+		}
+		return min == Integer.MAX_VALUE ? 0 : min; // check if the Initialized value is still
 	}
 
 	/**
