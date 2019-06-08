@@ -13,7 +13,7 @@ public class SemaphoreSimple {
 		this.count = new AtomicIntegerExt(count);
 	}
 
-	public void aquire() throws InterruptedException {
+	public void acquire() throws InterruptedException {
 		Object lock = new Object();
 
 		synchronized (lock) {

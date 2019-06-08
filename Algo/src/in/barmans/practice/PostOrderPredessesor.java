@@ -7,7 +7,7 @@ package in.barmans.practice;
  * @author mbarman
  *
  */
-public class PostOrderPredessesor extends BinararyTree {
+public class PostOrderPredessesor extends BinaryTree {
 
 	public PostOrderPredessesor(Node root) {
 		super(root);
